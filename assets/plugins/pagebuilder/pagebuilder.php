@@ -810,6 +810,7 @@ class PageBuilder
 
             case 'richtext': {
 				$params['layout'] = $field['layout'] ?? 'col-12';
+
                 if (isset($field['theme']) && !isset($this->themes[ $field['theme'] ]) && in_array($this->richeditor, [ 'TinyMCE4' ])) {
                     $result = $this->modx->invokeEvent('OnRichTextEditorInit', [
                         'editor'  => $this->richeditor,
@@ -822,7 +823,6 @@ class PageBuilder
 
                     $this->themes[ $field['theme'] ] = $result;
                 }
-
                 return $this->renderTpl('tpl/field_richtext.tpl', $params) . $this->trigger('OnPBFieldRender', $params);
             }
 

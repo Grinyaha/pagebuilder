@@ -133,14 +133,16 @@
 
                         switch (conf[field].type) {
                             case 'richtext': {
+
+                                console.log(tiny_version);
                                 var f = $field.children('textarea').get(0);
 
-                                if (typeof tinymce != 'undefined' && f.id && tinymce.editors[f.id]) {
-                                    values[field] = tinymce.editors[f.id].getContent();
-                                } else {
-                                    values[field] = $(f).val();
+                                if(tiny_version!="TinyMCE7") {
+                                    if (typeof tinymce != 'undefined' && f.id && tinymce.editors[f.id]) {
+                                        values[field] = tinymce.editors[f.id].getContent();
+                                    }
                                 }
-
+                                values[field] = $(f).val();
                                 break;
                             }
 
@@ -432,7 +434,8 @@
                             fieldConfig = conf[field];
 
                         switch (fieldConfig.type) {
-                            case 'richtext': {
+                            case 'richtext':
+                            case 'richtext_tiny7': {
                                 var $textarea = $field.children('textarea');
 
                                 if (fieldConfig.options) {
@@ -449,7 +452,7 @@
                             }
 
                             case 'image':
-                            case 'files': 
+                            case 'files':
                             {
                                 var $input = $field.children('input[type="text"]');
                                 $input.attr('id', 'fm' + ContentBlock.randomString() + ContentBlock.randomString());
@@ -514,6 +517,7 @@
                 },
 
                 initializeRichField: function($textarea) {
+
                     if ($textarea.closest('.hidden').length) {
                         return;
                     }
@@ -523,12 +527,15 @@
 
                     $textarea.get(0).id = 'rich' + ContentBlock.randomString();
 
-                    if (typeof tinymce !== 'undefined') {
+                    if (typeof tinymce !== 'undefined' && tiny_version != 'TinyMCE7') {
                         var conf = theme != undefined ? window['config_tinymce4_' + theme] : window[ modxRTEbridge_tinymce4.default ];
                         conf = $.extend({}, conf, options ? options : {});
-
                         conf.selector = '#' + $textarea.attr('id');
-                        tinymce.init(conf);
+                        if (typeof conf !== 'undefined') { tinymce.init(conf) };
+                    }
+
+                    if(tiny_version == 'TinyMCE7') {
+                        tinymce.init( tmce_init('#' + $textarea.attr('id')) );
                     }
                 },
 
