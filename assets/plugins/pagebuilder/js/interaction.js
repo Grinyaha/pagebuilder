@@ -134,7 +134,6 @@
                         switch (conf[field].type) {
                             case 'richtext': {
 
-                                console.log(tiny_version);
                                 var f = $field.children('textarea').get(0);
 
                                 if(tiny_version!="TinyMCE7") {

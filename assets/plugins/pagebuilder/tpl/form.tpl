@@ -1,10 +1,19 @@
 <link rel="stylesheet" href="../assets/plugins/pagebuilder/styles/styles.css?<?= $version ?>">
 
-    <script>
-        tiny_version = "<?= $this->modx->getConfig('which_editor') ?>";
+
+<?
+
+$query = $this->modx->db->query( "SELECT properties FROM " . evo()->getDatabase()->getFullTableName('site_plugins') . " WHERE name='TinyMCE7' AND disabled = 0 ");
+$rows = $this->modx->db->makeArray($query);
+$rowsres = json_decode($rows[0]['properties'], 1);
+$pb_tinyjs = "";
+if(!empty($rowsres)) $pb_tinyjs = '<script src="../assets/plugins/tinymce7/themes/pagebuilder/'.$rowsres['pagebuilder_file_theme'][0]['value'].'"></script>';
+?>
+<script>
+    tiny_version = "<?= $this->modx->getConfig('which_editor') ?>";
 </script>
 
-<script src="../assets/plugins/tinymce7/themes/pagebuilder/<?= $_SESSION['pagebuilder_file_theme'] ?>"></script>
+<?= $pb_tinyjs ?>
 <script src="../assets/plugins/pagebuilder/js/jquery-ui.min.js"></script>
 <script src="../assets/plugins/pagebuilder/js/interaction.js?<?= $version ?>"></script>
 
