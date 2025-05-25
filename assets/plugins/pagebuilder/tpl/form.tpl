@@ -1,16 +1,22 @@
 <link rel="stylesheet" href="../assets/plugins/pagebuilder/styles/styles.css?<?= $version ?>">
+
+    <script>
+        tiny_version = "<?= $this->modx->getConfig('which_editor') ?>";
+</script>
+
+<script src="../assets/plugins/tinymce7/themes/pagebuilder/<?= $_SESSION['pagebuilder_file_theme'] ?>"></script>
 <script src="../assets/plugins/pagebuilder/js/jquery-ui.min.js"></script>
 <script src="../assets/plugins/pagebuilder/js/interaction.js?<?= $version ?>"></script>
 
 <?php $formid = md5(rand()); ?>
 
 <div class="content-blocks-configs" data-formid="<?= $formid ?>">
-	<?php foreach ($configs as $filename => $config): ?> 
-		<?= $this->renderTpl('tpl/block.tpl', [ 
-			'configs' => $configs, 
+	<?php foreach ($configs as $filename => $config): ?>
+		<?= $this->renderTpl('tpl/block.tpl', [
+			'configs' => $configs,
 			'block'   => ['config' => $filename],
 			'addType' => [],
-		]) ?> 
+		]) ?>
 	<?php endforeach; ?>
 </div>
 
@@ -32,15 +38,15 @@
 	<?php $names[] = '#PB_' . $container['alias']; ?>
 <?php endforeach; ?>
 
-<?php foreach ($this->themes as $theme): ?> 
-	<?= $theme ?> 
-<?php endforeach; ?> 
+<?php foreach ($this->themes as $theme): ?>
+	<?= $theme ?>
+<?php endforeach; ?>
 
 <script>
 	jQuery( function() {
 		initcontentblocks( {
-			containers: jQuery('<?= implode(', ', $names) ?>'), 
-			values: <?= !empty($block) ? json_encode( $block, JSON_UNESCAPED_UNICODE ) : "{}" ?>, 
+			containers: jQuery('<?= implode(', ', $names) ?>'),
+			values: <?= !empty($block) ? json_encode( $block, JSON_UNESCAPED_UNICODE ) : "{}" ?>,
 			config: <?= !empty($configs) ? json_encode( $configs, JSON_UNESCAPED_UNICODE ) : "{}" ?>,
 			lang: <?= !empty($l) ? json_encode( $l, JSON_UNESCAPED_UNICODE ) : "{}" ?>,
 			browser: "<?= $browseurl ?>",
