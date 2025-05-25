@@ -534,7 +534,7 @@
                     }
 
                     if(tiny_version == 'TinyMCE7') {
-                        tinymce.init( tmce_init('#' + $textarea.attr('id')) );
+                        tinymce.init( tmce_init('#' + $textarea.attr('id'), lang) );
                     }
                 },
 
