@@ -11,7 +11,7 @@ if(!empty($rowsres)) $pb_tinyjs = '
 <script>
     lang = "'.$this->modx->getConfig('manager_language').'";
     if(lang == "ru" || lang == "russian-UTF8" || lang == "russian") lang = "ru";
-    else lang = "en";
+    
 </script>
 <script src="../assets/plugins/tinymce7/themes/pagebuilder/'.$rowsres['pagebuilder_file_theme'][0]['value'].'"></script>';
 ?>
